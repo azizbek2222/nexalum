@@ -11,34 +11,45 @@
     <div id="app">
         <div class="header">
             <div class="logo">NEXALUM</div>
-            <div class="balance-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" class="coin-img">
-                <h1 id="score">0</h1>
+            <div class="balance-display">
+                <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" alt="coin">
+                <span id="score">0</span>
             </div>
         </div>
 
-        <div class="click-section">
+        <div class="click-container">
             <div id="main-button">
-                <div class="circle-inner">N</div>
-                <div class="circle-glow"></div>
-                <div class="circle-outer"></div>
+                <div class="ring-outer"></div>
+                <div class="ring-inner"></div>
+                <div class="core">N</div>
             </div>
         </div>
 
-        <div class="footer-nav">
-            <div class="energy-left">
-                <div class="energy-info">
-                    <span>⚡ <span id="energy-text">1000/1000</span></span>
+        <div class="bottom-fixed">
+            <div class="energy-wrapper">
+                <div class="energy-label">
+                    <span>⚡ Energy</span>
+                    <span id="energy-text">0/100</span>
                 </div>
-                <div class="bar-container">
+                <div class="progress-bar">
                     <div id="energy-fill"></div>
                 </div>
             </div>
 
-            <a href="update.html" class="update-btn">
-                <div class="update-icon">🚀</div>
-                <span>Update</span>
-            </a>
+            <nav class="nav-bar">
+                <a href="referal.html" class="nav-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/912/912318.png">
+                    <span>Frens</span>
+                </a>
+                <a href="update.html" class="nav-btn active">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1162/1162456.png">
+                    <span>Boost</span>
+                </a>
+                <a href="profile.html" class="nav-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png">
+                    <span>Profile</span>
+                </a>
+            </nav>
         </div>
     </div>
     <script type="module" src="index.js"></script>

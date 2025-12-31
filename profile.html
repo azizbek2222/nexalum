@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexalum - Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <a href="index.html" class="back-link">⬅️ Back</a>
+            <div class="logo">MY PROFILE</div>
+        </div>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="avatar-wrapper">
+                    <img id="user-photo" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Avatar">
+                    <div class="status-badge">Online</div>
+                </div>
+                <h2 id="user-name">Loading...</h2>
+                <p id="user-id-text">ID: 000000000</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" alt="coin">
+                    <div class="stat-info">
+                        <span class="label">Balance</span>
+                        <span id="profile-balance" class="value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/10632/10632281.png" alt="rank">
+                    <div class="stat-info">
+                        <span class="label">Rank</span>
+                        <span id="user-rank" class="value">Explorer</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-list">
+                <div class="info-item">
+                    <span>League</span>
+                    <span class="gold-text">Bronze League</span>
+                </div>
+                <div class="info-item">
+                    <span>Verified</span>
+                    <span class="green-text">Yes</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <a href="referal.html" class="nav-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/912/912318.png">
+                <span>Frens</span>
+            </a>
+            <a href="index.html" class="nav-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png">
+                <span>Home</span>
+            </a>
+            <a href="profile.html" class="nav-btn active">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+    <script type="module" src="profile.js"></script>
+</body>
+</html>
