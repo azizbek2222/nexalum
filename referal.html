@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexalum - Frens</title>
+    <link rel="stylesheet" href="referal.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <a href="index.html" class="back-link">⬅️ Home</a>
+            <div class="logo">REFERRALS</div>
+        </div>
+
+        <div class="referral-content">
+            <div class="bonus-card">
+                <h2>Invite Frens!</h2>
+                <p>Do'stingiz ishlagan tangalardan <span>5%</span> sizga o'tadi!</p>
+                <div class="total-earned">
+                    <small>Total Earned from Frens:</small>
+                    <div class="earned-value">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" width="20">
+                        <span id="referral-income">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="invite-section">
+                <button id="copy-link-btn" class="main-btn">Copy Invite Link</button>
+                <button id="share-link-btn" class="main-btn secondary">Share with Frens</button>
+            </div>
+
+            <div class="frens-list-container">
+                <h3>Your Frens (<span id="frens-count">0</span>)</h3>
+                <div id="frens-list" class="frens-list">
+                    <p class="empty-msg">Hali hech kimni taklif qilmadingiz.</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <a href="referal.html" class="nav-btn active">
+                <img src="https://cdn-icons-png.flaticon.com/512/912/912318.png">
+                <span>Frens</span>
+            </a>
+            <a href="index.html" class="nav-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png">
+                <span>Home</span>
+            </a>
+            <a href="profile.html" class="nav-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+    <script type="module" src="referal.js"></script>
+</body>
+</html>
