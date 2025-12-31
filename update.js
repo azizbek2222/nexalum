@@ -14,9 +14,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const tg = window.Telegram.WebApp;
-const AdController = window.Adsgram.init({ blockId: "int-20319" });
 
-let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('local_id');
+// Telegram ID ni olish
+const user = tg.initDataUnsafe?.user;
+const userId = user ? user.id.toString() : "test_user";
+
+const AdController = window.Adsgram.init({ blockId: "int-20319" });
 const userRef = ref(db, 'users/' + userId);
 
 const clickCosts = [0, 5000, 25000, 125000, 625000, 3125000, 15625000, 78125000, 390625000, 1953125000];
@@ -45,7 +48,7 @@ document.getElementById('ad-energy-btn').onclick = () => {
                 update(userRef, { energy: max });
             }, { onlyOnce: true });
             tg.HapticFeedback.notificationOccurred('success');
-            alert("Energiya 100% to'ldi!");
+            tg.showAlert("Energiya 100% to'ldi!");
         }
     });
 };
@@ -53,10 +56,9 @@ document.getElementById('ad-energy-btn').onclick = () => {
 document.getElementById('ad-turbo-btn').onclick = () => {
     AdController.show().then((result) => {
         if (result.done) {
-            // Turbo vaqtini hozirgi vaqtdan 10 sekund keyinga o'rnatish
             update(userRef, { turboUntil: Date.now() + 10000 });
             tg.HapticFeedback.notificationOccurred('success');
-            alert("Turbo faollashdi! 10 sekund davomida 1.5x klik!");
+            tg.showAlert("Turbo faollashdi! 10 sekund davomida 1.5x klik!");
         }
     });
 };

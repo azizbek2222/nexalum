@@ -16,8 +16,9 @@ const db = getDatabase(app);
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('local_id') || 'u_' + Math.random().toString(36).substr(2, 9);
-if (!localStorage.getItem('local_id')) localStorage.setItem('local_id', userId);
+// Telegram ID ni olish
+const user = tg.initDataUnsafe?.user;
+const userId = user ? user.id.toString() : "test_user"; // Agar brauzerda ochilsa test_user ishlatadi
 
 const userRef = ref(db, 'users/' + userId);
 
@@ -38,18 +39,24 @@ onValue(userRef, (snapshot) => {
         currentEnergy = (data.energy !== undefined) ? data.energy : maxEnergy;
         updateUI();
     } else {
-        update(userRef, { balance: 0, clickLevel: 1, energyLevel: 1, energy: 100 });
+        // Yangi foydalanuvchini bazaga qo'shish
+        update(userRef, { 
+            balance: 0, 
+            clickLevel: 1, 
+            energyLevel: 1, 
+            energy: 100,
+            username: user?.username || "Noma'lum"
+        });
     }
 });
 
 mainBtn.addEventListener('pointerdown', (e) => {
-    // Turbo rejimini tekshirish (1.5x)
     const now = Date.now();
     const isTurbo = now < turboUntil;
     const activePower = isTurbo ? Math.floor(clickPower * 1.5) : clickPower;
 
     if (currentEnergy >= clickPower) {
-        // Balansni bazada tranzaksiya orqali oshirish (xavfsiz usul)
+        // Balansni xavfsiz tranzaksiya orqali oshirish
         runTransaction(userRef, (userData) => {
             if (userData) {
                 userData.balance = (userData.balance || 0) + activePower;
@@ -58,7 +65,6 @@ mainBtn.addEventListener('pointerdown', (e) => {
             return userData;
         });
 
-        // Lokal UI yangilash (darhol ko'rinishi uchun)
         balance += activePower;
         currentEnergy -= clickPower;
         updateUI();
@@ -67,7 +73,7 @@ mainBtn.addEventListener('pointerdown', (e) => {
         if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     } else {
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-        alert("Energiya tugadi! Update bo'limidan reklama ko'rib to'ldiring.");
+        tg.showAlert("Energiya tugadi! Update bo'limidan reklama ko'rib to'ldiring.");
     }
 });
 
@@ -78,7 +84,7 @@ function updateUI() {
 
     const innerCircle = mainBtn.querySelector('.circle-inner');
     if (Date.now() < turboUntil) {
-        innerCircle.style.borderColor = "#ff9f43"; // Turbo rang
+        innerCircle.style.borderColor = "#ff9f43";
         innerCircle.style.color = "#ff9f43";
         innerCircle.style.boxShadow = "inset 0 0 20px #ff9f43";
     } else {
