@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    user-select: none;
+}
+
+#game-app {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.coin-icon { width: 40px; }
+
+#score {
+    font-size: 48px;
+    margin: 0;
+    font-weight: 800;
+}
+
+.main-click-area {
+    margin: 60px 0;
+    perspective: 1000px;
+}
+
+#coin-button {
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+    transition: transform 0.05s active;
+}
+
+#nexalum-img {
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+}
+
+#coin-button:active {
+    transform: scale(0.95);
+}
+
+.stats-footer {
+    width: 80%;
+    text-align: left;
+    position: absolute;
+    bottom: 40px;
+}
+
+.energy-section {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #333;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+#energy-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #fbc02d, #fff176);
+    border-radius: 10px;
+    transition: width 0.2s;
+}
+
+/* Kliklashda chiqadigan +1 animatsiyasi uchun */
+.plus-one {
+    position: absolute;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    animation: floatUp 0.8s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-100px); }
+}
