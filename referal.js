@@ -24,11 +24,11 @@ const inviteLink = `https://t.me/${botUsername}/app?startapp=${userId}`;
 
 document.getElementById('copy-link-btn').onclick = () => {
     navigator.clipboard.writeText(inviteLink);
-    tg.showAlert("Havola nusxalandi!");
+    tg.showAlert("Link copied!");
 };
 
 document.getElementById('share-link-btn').onclick = () => {
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum o'yinida men bilan birga tanga yig'ing!")}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Collect coins with me in the game Nexalum!")}`;
     tg.openTelegramLink(shareUrl);
 };
 
