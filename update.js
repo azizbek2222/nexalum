@@ -14,8 +14,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const tg = window.Telegram.WebApp;
-
-// Adsgram init (O'z blockId-ingizni qo'ying)
 const AdController = window.Adsgram.init({ blockId: "int-20319" });
 
 let userId = tg.initDataUnsafe?.user?.id || localStorage.getItem('local_id');
@@ -28,30 +26,17 @@ onValue(userRef, (snapshot) => {
     const data = snapshot.val() || {};
     document.getElementById('display-balance').innerText = (data.balance || 0).toLocaleString();
     
-    // Multi-click UI
     const cLvl = data.clickLevel || 1;
-    if (cLvl < 10) {
-        document.getElementById('click-cost').innerText = clickCosts[cLvl].toLocaleString();
-        document.getElementById('upgrade-click-btn').disabled = (data.balance || 0) < clickCosts[cLvl];
-    } else {
-        document.getElementById('click-cost').innerText = "MAX";
-        document.getElementById('upgrade-click-btn').disabled = true;
-    }
+    document.getElementById('click-cost').innerText = cLvl < 10 ? clickCosts[cLvl].toLocaleString() : "MAX";
+    document.getElementById('upgrade-click-btn').disabled = cLvl >= 10 || (data.balance || 0) < clickCosts[cLvl];
     document.getElementById('click-level').innerText = "Level " + cLvl;
 
-    // Energy UI
     const eLvl = data.energyLevel || 1;
-    if (eLvl < 10) {
-        document.getElementById('energy-cost').innerText = energyCosts[eLvl].toLocaleString();
-        document.getElementById('upgrade-energy-btn').disabled = (data.balance || 0) < energyCosts[eLvl];
-    } else {
-        document.getElementById('energy-cost').innerText = "MAX";
-        document.getElementById('upgrade-energy-btn').disabled = true;
-    }
+    document.getElementById('energy-cost').innerText = eLvl < 10 ? energyCosts[eLvl].toLocaleString() : "MAX";
+    document.getElementById('upgrade-energy-btn').disabled = eLvl >= 10 || (data.balance || 0) < energyCosts[eLvl];
     document.getElementById('energy-level').innerText = "Level " + eLvl;
 });
 
-// Reklama: Full Energy
 document.getElementById('ad-energy-btn').onclick = () => {
     AdController.show().then((result) => {
         if (result.done) {
@@ -60,16 +45,18 @@ document.getElementById('ad-energy-btn').onclick = () => {
                 update(userRef, { energy: max });
             }, { onlyOnce: true });
             tg.HapticFeedback.notificationOccurred('success');
+            alert("Energiya 100% to'ldi!");
         }
     });
 };
 
-// Reklama: Turbo Click
 document.getElementById('ad-turbo-btn').onclick = () => {
     AdController.show().then((result) => {
         if (result.done) {
+            // Turbo vaqtini hozirgi vaqtdan 10 sekund keyinga o'rnatish
             update(userRef, { turboUntil: Date.now() + 10000 });
             tg.HapticFeedback.notificationOccurred('success');
+            alert("Turbo faollashdi! 10 sekund davomida 1.5x klik!");
         }
     });
 };
