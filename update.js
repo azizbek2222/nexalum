@@ -58,7 +58,7 @@ document.getElementById('ad-turbo-btn').onclick = () => {
         if (result.done) {
             update(userRef, { turboUntil: Date.now() + 10000 });
             tg.HapticFeedback.notificationOccurred('success');
-            tg.showAlert("Turbo faollashdi! 10 sekund davomida 1.5x klik!");
+            tg.showAlert("Turbo activated! 1.5x clicks for 10 seconds!");
         }
     });
 };

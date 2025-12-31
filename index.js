@@ -73,7 +73,7 @@ mainBtn.addEventListener('pointerdown', (e) => {
         if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     } else {
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-        tg.showAlert("Energiya tugadi! Update bo'limidan reklama ko'rib to'ldiring.");
+        tg.showAlert("You're out of energy! Refill from the Boost section..");
     }
 });
 
