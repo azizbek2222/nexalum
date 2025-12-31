@@ -1,102 +1,158 @@
+/* Asosiy sozlamalar */
 body {
     margin: 0;
     padding: 0;
     background-color: #000;
     color: #fff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    overflow: hidden;
-    user-select: none;
+    overflow: hidden; /* Skrolni yo'qotish */
+    user-select: none; /* Matnni belgilashni taqiqlash */
+    -webkit-tap-highlight-color: transparent; /* Mobil teginishdagi ko'k rangni yo'qotish */
 }
 
+/* Ilova konteyneri */
 #game-app {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    box-sizing: border-box;
 }
 
+/* Hisoblagich qismi */
 .score-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
 }
 
-.coin-icon { width: 40px; }
+.coin-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+}
 
 #score {
-    font-size: 48px;
+    font-size: 54px;
     margin: 0;
     font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
+/* Asosiy klik maydoni */
 .main-click-area {
-    margin: 60px 0;
-    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    perspective: 1000px; /* 3D effekt uchun */
 }
 
 #coin-button {
-    width: 250px;
-    height: 250px;
+    width: 280px;
+    height: 280px;
+    position: relative;
     cursor: pointer;
-    transition: transform 0.05s active;
-}
-
-#nexalum-img {
-    width: 100%;
     border-radius: 50%;
-    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+    transition: transform 0.05s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
 }
 
 #coin-button:active {
-    transform: scale(0.95);
+    transform: scale(0.92); /* Bosilganda kichrayish */
 }
 
+/* Nexalum rasm sozlamasi */
+#nexalum-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    pointer-events: none; /* Rasmni o'zini emas, tugmani bosish uchun */
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.15));
+}
+
+/* Pastki qism (Energiya) */
 .stats-footer {
-    width: 80%;
-    text-align: left;
-    position: absolute;
-    bottom: 40px;
+    width: 85%;
+    margin-bottom: 30px;
 }
 
 .energy-section {
-    font-weight: bold;
-    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
+.energy-section span {
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Energiya progress bari */
 .progress-bar {
     width: 100%;
-    height: 12px;
-    background: #333;
-    border-radius: 10px;
-    margin-top: 5px;
+    height: 14px;
+    background: #222;
+    border-radius: 20px;
+    border: 1px solid #333;
+    overflow: hidden;
 }
 
 #energy-fill {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #fbc02d, #fff176);
-    border-radius: 10px;
-    transition: width 0.2s;
+    background: linear-gradient(90deg, #FFD700, #FFF176);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    border-radius: 20px;
+    transition: width 0.3s ease;
 }
 
-/* Kliklashda chiqadigan +1 animatsiyasi uchun */
+/* Kliklanganda chiqadigan +1 animatsiyasi */
 .plus-one {
     position: absolute;
     color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    animation: floatUp 0.8s ease-out forwards;
+    font-size: 28px;
+    font-weight: 900;
     pointer-events: none;
+    z-index: 1000;
+    animation: floatUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 @keyframes floatUp {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-100px); }
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(1.2);
+    }
+}
+
+/* Planshet va Desktop uchun kichik moslashtirish */
+@media (min-width: 600px) {
+    #coin-button {
+        width: 320px;
+        height: 320px;
+    }
 }
