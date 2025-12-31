@@ -13,58 +13,49 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-const userId = tg.initDataUnsafe?.user?.id || "test_user_123";
+const userId = tg.initDataUnsafe?.user?.id || "local_test_id";
 const balanceRef = ref(db, `users/${userId}/balance`);
-const userRef = ref(db, `users/${userId}`);
 
 let energy = 1000;
-let isSyncing = false; // Bir vaqtning o'zida ko'p so'rov ketmasligi uchun
 
 const scoreEl = document.getElementById('score');
 const energyText = document.getElementById('energy-text');
 const energyFill = document.getElementById('energy-fill');
 const coinBtn = document.getElementById('coin-button');
 
-// 1. Bazadan ma'lumotni yuklash
-onValue(userRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data && data.balance !== undefined) {
-        scoreEl.innerText = data.balance.toLocaleString();
-    }
+// 1. Bazadan balansni yuklash
+onValue(balanceRef, (snapshot) => {
+    const val = snapshot.val();
+    scoreEl.innerText = (val || 0).toLocaleString();
 });
 
-// 2. Klik funksiyasi (Event Listener bilan)
+// 2. KLIK FUNKSIYASI (Eng barqaror usul)
+const handleInteraction = (e) => {
+    if (energy > 0) {
+        energy--;
+        updateUI();
+        showPlusOne(e);
+
+        // Firebase-da balansni 1 taga oshirish
+        runTransaction(balanceRef, (current) => {
+            return (current || 0) + 1;
+        });
+
+        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    }
+};
+
+// Hodisalarni bog'lash
 if (coinBtn) {
-    coinBtn.addEventListener('click', (e) => {
-        console.log("Klik bosildi!"); // Tekshirish uchun
-
-        if (energy > 0) {
-            // UI-ni darhol yangilash (Tezkorlik uchun)
-            energy--;
-            updateEnergyUI();
-            showPlusOne(e);
-
-            // Bazaga yuborish
-            runTransaction(balanceRef, (currentBalance) => {
-                return (currentBalance || 0) + 1;
-            }).catch(err => console.error("Firebase xatosi:", err));
-            
-        } else {
-            if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-            console.log("Energiya tugadi");
-        }
-    });
-} else {
-    console.error("coin-button elementi topilmadi!");
+    coinBtn.addEventListener('pointerdown', handleInteraction);
 }
 
-function updateEnergyUI() {
-    if (energyText) energyText.innerText = `${energy}/1000`;
-    if (energyFill) energyFill.style.width = (energy / 10) + "%";
+function updateUI() {
+    energyText.innerText = `${energy}/1000`;
+    energyFill.style.width = (energy / 10) + "%";
 }
 
 function showPlusOne(e) {
@@ -73,21 +64,19 @@ function showPlusOne(e) {
     p.className = 'plus-one';
     
     // Koordinatalarni aniqlash
-    const x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    const y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+    const x = e.clientX || (e.touches && e.touches[0].clientX);
+    const y = e.clientY || (e.touches && e.touches[0].clientY);
     
     p.style.left = x + 'px';
     p.style.top = y + 'px';
     document.body.appendChild(p);
-    
-    setTimeout(() => p.remove(), 800);
-    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+    setTimeout(() => p.remove(), 700);
 }
 
-// Energiyani tiklash
+// Energiya tiklanishi
 setInterval(() => {
     if (energy < 1000) {
         energy++;
-        updateEnergyUI();
+        updateUI();
     }
-}, 3000);
+}, 2000);
