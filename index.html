@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nexalum Clicker</title>
+    <title>Nexalum - Futuristik Clicker</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div id="game-app">
-        <div class="score-container">
-            <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" class="coin-icon">
-            <h1 id="score">0</h1>
-        </div>
-
-        <div class="main-click-area">
-            <div id="coin-button">
-                <img src="nexalum.png" id="nexalum-img" alt="Nexalum">
+    <div id="app">
+        <div class="header">
+            <div class="logo">NEXALUM</div>
+            <div class="balance-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" class="coin-img">
+                <h1 id="score">0</h1>
             </div>
         </div>
 
-        <div class="stats-footer">
-            <div class="energy-section">
-                <span>⚡ <span id="energy-text">1000/1000</span></span>
-                <div class="progress-bar">
+        <div class="click-section">
+            <div id="main-button">
+                <div class="circle-inner">N</div>
+                <div class="circle-glow"></div>
+                <div class="circle-outer"></div>
+            </div>
+        </div>
+
+        <div class="footer-nav">
+            <div class="energy-left">
+                <div class="energy-info">
+                    <span>⚡ <span id="energy-text">1000/1000</span></span>
+                </div>
+                <div class="bar-container">
                     <div id="energy-fill"></div>
                 </div>
             </div>
+
+            <a href="update.html" class="update-btn">
+                <div class="update-icon">🚀</div>
+                <span>Update</span>
+            </a>
         </div>
     </div>
-
     <script type="module" src="index.js"></script>
 </body>
 </html>

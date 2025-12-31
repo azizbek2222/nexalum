@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexalum - Upgrades</title>
+    <link rel="stylesheet" href="update.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div class="header">
+            <a href="index.html" class="back-link">⬅️ Back</a>
+            <div class="logo">UPGRADES</div>
+            <div class="user-balance">
+                <img src="https://cdn-icons-png.flaticon.com/512/2311/2311745.png" width="20">
+                <span id="display-balance">0</span>
+            </div>
+        </div>
+
+        <div class="upgrade-container">
+            <div class="upgrade-card">
+                <div class="info">
+                    <span class="title">🚀 Multi-Click</span>
+                    <span class="level" id="click-level">Level 1</span>
+                </div>
+                <button id="upgrade-click-btn" class="buy-btn">
+                    <span id="click-cost">5,000</span>
+                </button>
+            </div>
+
+            <div class="upgrade-card">
+                <div class="info">
+                    <span class="title">⚡ Energy Limit</span>
+                    <span class="level" id="energy-level">Level 1</span>
+                </div>
+                <button id="upgrade-energy-btn" class="buy-btn">
+                    <span id="energy-cost">10,000</span>
+                </button>
+            </div>
+
+            <hr style="border: 0.5px solid rgba(255,255,255,0.1); width: 100%;">
+
+            <div class="upgrade-card">
+                <div class="info">
+                    <span class="title">⚡ Full Energy</span>
+                    <span class="level">Bepul (Ad)</span>
+                    <p style="font-size: 10px; color: #888;">Energiyani 100% to'ldirish</p>
+                </div>
+                <button id="ad-energy-btn" class="buy-btn" style="background: #ff9f43;">
+                    <span>📺 Fill</span>
+                </button>
+            </div>
+
+            <div class="upgrade-card">
+                <div class="info">
+                    <span class="title">🔥 Turbo Click</span>
+                    <span class="level">Bepul (Ad)</span>
+                    <p style="font-size: 10px; color: #888;">10 sek davomida 1.5x click</p>
+                </div>
+                <button id="ad-turbo-btn" class="buy-btn" style="background: #ff9f43;">
+                    <span>📺 Start</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="update.js"></script>
+</body>
+</html>

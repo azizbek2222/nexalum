@@ -1,97 +1,99 @@
+/* Avvalgi CSS qismlari saqlanib qoladi */
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    color: #fff;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0; padding: 0;
+    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+    color: #fff; font-family: 'Segoe UI', sans-serif;
+    height: 100vh; display: flex; justify-content: center;
+    overflow: hidden; user-select: none; -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+    width: 100%; max-width: 420px;
+    display: flex; flex-direction: column;
+    justify-content: space-between; align-items: center;
+    padding: 30px 20px; box-sizing: border-box; height: 100%;
+}
+
+/* Balans va Logo */
+.logo { font-size: 20px; font-weight: 900; letter-spacing: 6px; color: #4ecca3; margin-bottom: 10px; }
+.balance-card {
+    background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1); padding: 10px 25px;
+    border-radius: 20px; display: flex; align-items: center; gap: 12px;
+}
+.coin-img { width: 30px; height: 30px; }
+#score { font-size: 36px; margin: 0; }
+
+/* Tugma */
+#main-button { width: 240px; height: 240px; position: relative; cursor: pointer; transition: 0.1s; }
+#main-button:active { transform: scale(0.92); }
+.circle-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: rgba(78, 204, 163, 0.05); border: 2px solid #4ecca3;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 80px; font-weight: 900; color: #4ecca3; position: relative; z-index: 10;
+}
+.circle-outer {
+    position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+    border: 1px dashed rgba(78, 204, 163, 0.3); border-radius: 50%;
+    animation: rotate 10s linear infinite;
+}
+@keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Footer Navigatsiya (Yangilangan qism) */
+.footer-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.energy-left {
+    width: 50%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+    gap: 8px;
 }
 
-#game-app {
-    width: 100%;
-    max-width: 450px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
+.energy-info { font-weight: bold; font-size: 16px; color: #4ecca3; }
 
-.score-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.coin-icon { width: 45px; }
-
-#score {
-    font-size: 50px;
-    margin: 0;
-    font-weight: 800;
-}
-
-#coin-button {
-    width: 280px;
-    height: 280px;
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-#coin-button:active {
-    transform: scale(0.95);
-}
-
-#nexalum-img {
-    width: 100%;
-    border-radius: 50%;
-    pointer-events: none; /* Rasm klikni to'sib qo'ymaydi */
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
-.stats-footer { width: 85%; }
-
-.energy-section { font-weight: bold; font-size: 18px; text-align: left; }
-
-.progress-bar {
-    width: 100%;
-    height: 12px;
-    background: #333;
-    border-radius: 10px;
-    margin-top: 8px;
-    overflow: hidden;
+.bar-container {
+    width: 100%; height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px; overflow: hidden;
 }
 
 #energy-fill {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #fbc02d, #fff176);
-    transition: width 0.1s linear;
+    width: 100%; height: 100%;
+    background: #4ecca3; box-shadow: 0 0 10px #4ecca3;
+    transition: width 0.3s ease;
 }
 
-.plus-one {
-    position: absolute;
+.update-btn {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: #fff;
-    font-size: 32px;
-    font-weight: bold;
-    animation: floatUp 0.7s ease-out forwards;
-    pointer-events: none;
-    z-index: 100;
+    transition: 0.2s;
 }
 
+.update-btn:active { transform: scale(0.95); background: rgba(78, 204, 163, 0.2); }
+
+.update-icon { font-size: 24px; }
+.update-btn span { font-size: 12px; font-weight: bold; margin-top: 4px; color: #4ecca3; }
+
+/* +1 Effekti */
+.plus-one {
+    position: absolute; color: #4ecca3; font-size: 32px; font-weight: 900;
+    pointer-events: none; animation: floatUp 0.8s ease-out forwards;
+}
 @keyframes floatUp {
-    0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-120px); }
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100px); opacity: 0; }
 }
