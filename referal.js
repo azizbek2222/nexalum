@@ -27,7 +27,7 @@ document.getElementById('copy-link-btn').onclick = () => {
 };
 
 document.getElementById('share-link-btn').onclick = () => {
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum - Men bilan birga tanga yig'ing!")}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum - Collect coins with me!")}`;
     tg.openTelegramLink(shareUrl);
 };
 
@@ -63,7 +63,7 @@ onValue(usersRef, (snapshot) => {
         }
     }
 
-    frensList.innerHTML = count > 0 ? html : '<p class="empty-msg">Siz hali hech kimni taklif qilmadingiz..</p>';
+    frensList.innerHTML = count > 0 ? html : '<p class="empty-msg">You haven't invited anyone yet...</p>';
     countEl.innerText = count;
     incomeEl.innerText = totalIncome.toLocaleString();
 });
