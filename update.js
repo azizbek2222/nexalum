@@ -48,7 +48,7 @@ document.getElementById('ad-energy-btn').onclick = () => {
                 update(userRef, { energy: max });
             }, { onlyOnce: true });
             tg.HapticFeedback.notificationOccurred('success');
-            tg.showAlert("Energiya 100% to'ldi!");
+            tg.showAlert("Energy 100% full!");
         }
     });
 };
