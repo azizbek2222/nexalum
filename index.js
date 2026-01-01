@@ -52,7 +52,7 @@ async function syncReferralIncome() {
                 balance: (myData.balance || 0) + newProfit,
                 lastClaimedReferral: totalFrenProfit
             });
-            tg.showAlert(`Referallaringizdan +${newProfit} tanga keldi!`);
+            tg.showAlert(`+${newProfit} coins from your referrals!`);
         }
     }
 }
@@ -98,7 +98,7 @@ mainBtn.addEventListener('pointerdown', (e) => {
         showPlusOne(e, activePower);
         if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     } else {
-        tg.showAlert("Energy tugadi!");
+        tg.showAlert("Energy is out!");
     }
 });
 
