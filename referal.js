@@ -23,7 +23,7 @@ const inviteLink = `https://t.me/${botUsername}/app?startapp=${userId}`;
 
 document.getElementById('copy-link-btn').onclick = () => {
     navigator.clipboard.writeText(inviteLink);
-    tg.showAlert("Link nusxalandi!");
+    tg.showAlert("Link copied!");
 };
 
 document.getElementById('share-link-btn').onclick = () => {
