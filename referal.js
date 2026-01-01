@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBrMKJ4MPilQg6gZsaE-Hlqlgo5F4Q8IsM",
+    apiKey: "AIzaSyBrMKJ4MPilQg6gZsaE-Hlqlgo5F4 (asl kalitingiz)",
     authDomain: "xabar-tizimi.firebaseapp.com",
     databaseURL: "https://xabar-tizimi-default-rtdb.firebaseio.com",
     projectId: "xabar-tizimi",
@@ -17,9 +17,8 @@ const tg = window.Telegram.WebApp;
 
 const user = tg.initDataUnsafe?.user;
 const userId = user ? user.id.toString() : "dev_user";
-const botUsername = "nexalum_bot"; // Bot username
+const botUsername = "nexalum_bot"; 
 
-// Referal havolasini tayyorlash
 const inviteLink = `https://t.me/${botUsername}/app?startapp=${userId}`;
 
 document.getElementById('copy-link-btn').onclick = () => {
@@ -28,11 +27,11 @@ document.getElementById('copy-link-btn').onclick = () => {
 };
 
 document.getElementById('share-link-btn').onclick = () => {
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Collect coins with me in the game Nexalum!")}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum - Collect coins with me!")}`;
     tg.openTelegramLink(shareUrl);
 };
 
-// Referallarni yuklash va 5% hisoblash
+// Referallarni qidirish
 const usersRef = ref(db, 'users');
 onValue(usersRef, (snapshot) => {
     const allUsers = snapshot.val();
@@ -46,16 +45,16 @@ onValue(usersRef, (snapshot) => {
 
     if (allUsers) {
         for (let key in allUsers) {
-            // Agar foydalanuvchining 'referredBy' qiymati bizning ID ga teng bo'lsa
-            if (allUsers[key].referredBy == userId) {
+            // String holatida solishtirish xatolikni oldini oladi
+            if (allUsers[key].referredBy && String(allUsers[key].referredBy) === String(userId)) {
                 const frenBalance = allUsers[key].balance || 0;
-                const profit = Math.floor(frenBalance * 0.05); // 5% keshbek
+                const profit = Math.floor(frenBalance * 0.05); 
                 totalIncome += profit;
                 count++;
 
                 html += `
                     <div class="fren-item">
-                        <span class="fren-name">${allUsers[key].username || "User " + key.slice(0,5)}</span>
+                        <span class="fren-name">@${allUsers[key].username || "User"}</span>
                         <span class="fren-profit">+${profit.toLocaleString()}</span>
                     </div>
                 `;
@@ -65,6 +64,8 @@ onValue(usersRef, (snapshot) => {
 
     if (count > 0) {
         frensList.innerHTML = html;
+    } else {
+        frensList.innerHTML = '<p class="empty-msg">You haven\'t invited anyone yet..</p>';
     }
     countEl.innerText = count;
     incomeEl.innerText = totalIncome.toLocaleString();

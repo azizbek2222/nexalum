@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getDatabase, ref, onValue, update, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { getDatabase, ref, onValue, update, runTransaction, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBrMKJ4MPilQg6gZsaE-Hlqlgo5F4Q8IsM",
@@ -16,9 +16,9 @@ const db = getDatabase(app);
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-// Telegram ID ni olish
 const user = tg.initDataUnsafe?.user;
-const userId = user ? user.id.toString() : "test_user"; // Agar brauzerda ochilsa test_user ishlatadi
+const userId = user ? user.id.toString() : "test_user";
+const startParam = tg.initDataUnsafe?.start_param; // Taklif qilgan odam ID-si
 
 const userRef = ref(db, 'users/' + userId);
 
@@ -29,6 +29,7 @@ const energyText = document.getElementById('energy-text');
 const energyFill = document.getElementById('energy-fill');
 const mainBtn = document.getElementById('main-button');
 
+// Foydalanuvchini tekshirish va ro'yxatga olish
 onValue(userRef, (snapshot) => {
     const data = snapshot.val();
     if (data) {
@@ -39,16 +40,18 @@ onValue(userRef, (snapshot) => {
         currentEnergy = (data.energy !== undefined) ? data.energy : maxEnergy;
         updateUI();
     } else {
-        // Yangi foydalanuvchini bazaga qo'shish
-        update(userRef, { 
+        // Yangi foydalanuvchi bo'lsa, referredBy bilan birga saqlaymiz
+        const newUser = { 
             balance: 0, 
             clickLevel: 1, 
             energyLevel: 1, 
             energy: 100,
-            username: user?.username || "Noma'lum"
-        });
+            username: user?.username || "Noma'lum",
+            referredBy: (startParam && startParam !== userId) ? startParam : null // O'zini taklif qila olmaydi
+        };
+        update(userRef, newUser);
     }
-});
+}, { onlyOnce: false });
 
 mainBtn.addEventListener('pointerdown', (e) => {
     const now = Date.now();
@@ -56,7 +59,6 @@ mainBtn.addEventListener('pointerdown', (e) => {
     const activePower = isTurbo ? Math.floor(clickPower * 1.5) : clickPower;
 
     if (currentEnergy >= clickPower) {
-        // Balansni xavfsiz tranzaksiya orqali oshirish
         runTransaction(userRef, (userData) => {
             if (userData) {
                 userData.balance = (userData.balance || 0) + activePower;
@@ -73,25 +75,14 @@ mainBtn.addEventListener('pointerdown', (e) => {
         if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     } else {
         if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
-        tg.showAlert("You're out of energy! Refill from the Boost section..");
+        tg.showAlert("You're out of energy!");
     }
 });
 
 function updateUI() {
-    scoreEl.innerText = balance.toLocaleString();
-    energyText.innerText = `${currentEnergy}/${maxEnergy}`;
-    energyFill.style.width = (currentEnergy / maxEnergy * 100) + "%";
-
-    const innerCircle = mainBtn.querySelector('.circle-inner');
-    if (Date.now() < turboUntil) {
-        innerCircle.style.borderColor = "#ff9f43";
-        innerCircle.style.color = "#ff9f43";
-        innerCircle.style.boxShadow = "inset 0 0 20px #ff9f43";
-    } else {
-        innerCircle.style.borderColor = "#4ecca3";
-        innerCircle.style.color = "#4ecca3";
-        innerCircle.style.boxShadow = "none";
-    }
+    if(scoreEl) scoreEl.innerText = balance.toLocaleString();
+    if(energyText) energyText.innerText = `${currentEnergy}/${maxEnergy}`;
+    if(energyFill) energyFill.style.width = (currentEnergy / maxEnergy * 100) + "%";
 }
 
 function showPlusOne(e, power) {
