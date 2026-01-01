@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebas
 import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBrMKJ4MPilQg6gZsaE-Hlqlgo5F4 (asl kalitingiz)",
+    apiKey: "AIzaSyBrMKJ4MPilQg6gZsaE-Hlqlgo5F4Q8IsM",
     authDomain: "xabar-tizimi.firebaseapp.com",
     databaseURL: "https://xabar-tizimi-default-rtdb.firebaseio.com",
     projectId: "xabar-tizimi",
@@ -23,15 +23,14 @@ const inviteLink = `https://t.me/${botUsername}/app?startapp=${userId}`;
 
 document.getElementById('copy-link-btn').onclick = () => {
     navigator.clipboard.writeText(inviteLink);
-    tg.showAlert("Link copied!");
+    tg.showAlert("Link nusxalandi!");
 };
 
 document.getElementById('share-link-btn').onclick = () => {
-    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum - Collect coins with me!")}`;
+    const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent("Nexalum - Men bilan birga tanga yig'ing!")}`;
     tg.openTelegramLink(shareUrl);
 };
 
-// Referallarni qidirish
 const usersRef = ref(db, 'users');
 onValue(usersRef, (snapshot) => {
     const allUsers = snapshot.val();
@@ -45,16 +44,18 @@ onValue(usersRef, (snapshot) => {
 
     if (allUsers) {
         for (let key in allUsers) {
-            // String holatida solishtirish xatolikni oldini oladi
             if (allUsers[key].referredBy && String(allUsers[key].referredBy) === String(userId)) {
                 const frenBalance = allUsers[key].balance || 0;
                 const profit = Math.floor(frenBalance * 0.05); 
                 totalIncome += profit;
                 count++;
 
+                // Username bo'lmasa ID ko'rsatiladi
+                const displayName = allUsers[key].username ? `@${allUsers[key].username}` : `ID: ${key}`;
+
                 html += `
                     <div class="fren-item">
-                        <span class="fren-name">@${allUsers[key].username || "User"}</span>
+                        <span class="fren-name">${displayName}</span>
                         <span class="fren-profit">+${profit.toLocaleString()}</span>
                     </div>
                 `;
@@ -62,11 +63,7 @@ onValue(usersRef, (snapshot) => {
         }
     }
 
-    if (count > 0) {
-        frensList.innerHTML = html;
-    } else {
-        frensList.innerHTML = '<p class="empty-msg">You haven\'t invited anyone yet..</p>';
-    }
+    frensList.innerHTML = count > 0 ? html : '<p class="empty-msg">Siz hali hech kimni taklif qilmadingiz..</p>';
     countEl.innerText = count;
     incomeEl.innerText = totalIncome.toLocaleString();
 });
